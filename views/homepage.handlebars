@@ -1,18 +1,19 @@
-{{#if posts.length}}
-{{#each posts as |post| }}
-<div class="row justify-content-between">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h3>
-          <a href="/dashboard/view/{{post.id}}">{{post.title}}</a>
-        </h3>
-        <span>Posted {{format_date post.date_created}}</span>
-      </div>
+  {{#if posts.length}}
+    {{#each posts as |post| }}
+    <div class="container post">
+        <div class="navbar nav-post">
+
+            {{#if ../loggedIn}}
+                <a href="/post/{{post.id}}"><h2 class="nav-text">{{post.title}}</h2></a>
+            {{else}}
+                <h2 class="nav-text">{{post.title}}</h2>
+            {{/if}}
+            
+            <h6 class="nav-text">Posted by {{post.User.fullname}} on {{post.postDate}}</h6>
+        </div>
+        <div class="nav-content"><h2>{{post.content}}</h2></div>
     </div>
-  </div>
-</div>
-{{/each}}
-{{else}}
-<h2>No posts to display.</h2>
-{{/if}}
+    {{/each}}
+  {{else}}
+  <h2>No posts to display.</h2>
+  {{/if}}

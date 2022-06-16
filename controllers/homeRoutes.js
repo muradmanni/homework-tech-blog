@@ -1,12 +1,22 @@
 const router = require('express').Router();
 const withAuth = require('../utils/auth');
 const Post = require('../models/Post')
+const User = require('../models/User')
+const sequelize = require("../config/connection");
 
 router.get('/', async (req, res) => {
     try {
-        const dbPosts = await Post.findAll({});
-        
-        res.render('homepage' , {posts: dbPosts, layout :'main'});
+        const dbPosts = await Post.findAll({
+            include:[{model: User,attributes:['fullname']}],
+            attributes: {
+                include: [
+                  [ sequelize.fn("DATE_FORMAT", sequelize.col("created_at"), "%d-%m-%y"), "postDate"]
+                ],
+              },   
+        });
+        const posts = dbPosts.map((post) => post.get({ plain: true }));
+        console.log(posts)
+        res.status(200).render('homepage', {loggedIn: req.session.loggedIn, posts,  layout :'main'});
     } catch (err) {
         res.status(500).json(err);
     }
@@ -23,11 +33,22 @@ router.get('/login', async (req, res) => {
 router.get('/dashboard', withAuth, async (req, res) => {
     try {
         const dbPosts = await Post.findAll({
-            where: {
-                id: req.session.userId
-            }
+                include:[{model: User,attributes:['fullname']}],
+                where:{
+                    user_id: req.session.userId,
+                },
+                attributes: {
+                    include: [
+                      [ sequelize.fn("DATE_FORMAT", sequelize.col("created_at"), "%d-%m-%y"), "postDate"]
+                    ],
+                  },
+            
         });
-        res.render('dashboard' , {posts: dbPosts, loggedIn: req.session.loggedIn, layout :'main'});
+
+
+        const posts = dbPosts.map((post) => post.get({ plain: true }));
+        console.log(posts);
+        res.render('dashboard' , {posts: posts, loggedIn: req.session.loggedIn, layout :'main'});
     } catch (err) {
         res.status(500).json(err);
     }

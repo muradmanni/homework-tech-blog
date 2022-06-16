@@ -1,5 +1,4 @@
 const newPost = async () => {
-  alert("asdsdsadas");  
   location.replace('/newPost')
 };
 
