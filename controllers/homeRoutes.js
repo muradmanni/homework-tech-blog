@@ -65,7 +65,7 @@ router.get('/newUser', async (req, res) => {
 
 router.get('/newPost', withAuth, async (req, res) => {
     try {
-        res.render('createpost' , {layout :'main'});
+        res.render('createpost' , {loggedIn: req.session.loggedIn, layout :'main'});
     } catch (err) {
         res.status(500).json(err);
     }

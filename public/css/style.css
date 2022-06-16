@@ -1,5 +1,6 @@
 .nav-text{
     color: white;
+    
 }
 
 .head{
@@ -29,4 +30,28 @@
     padding-right: 10px;
     padding-left: 10px;
     padding-bottom: 10px;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+.post-comment{
+    margin-top: 5px;
+    border: 2px;
+    border-color: sandybrown;
+    border-radius: 5px;
+    border-style: solid;
+    padding-right: 0px;
+    padding-left: 0px
+}
+.nav-comment {
+    background-color: sandybrown;
+    padding-right: 10px;
+    padding-left: 10px
+}
+
+.comment-stamp{
+    font-weight: normal;
+    font-style: italic;
 }
