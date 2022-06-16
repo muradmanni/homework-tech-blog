@@ -27,7 +27,14 @@ const updatePost = async (event) =>{
 }
 
 const deletePost = async (event) =>{
-    alert("delete")
+    event.preventDefault();
+
+    const response = await fetch('/post/delete/'+ postId, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    })
+
+    location.replace('/dashboard');
 }
 
 document

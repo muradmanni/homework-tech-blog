@@ -1,7 +1,6 @@
 // var myModal = new bootstrap.Modal(document.getElementById("eModal"), {});
       
 const createPost = async (event) =>{
-    alert("adsadass");
     event.preventDefault();
     var comment = document.querySelector("#comment-content").value;
 
